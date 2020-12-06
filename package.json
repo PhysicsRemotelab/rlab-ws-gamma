@@ -1,15 +1,13 @@
 {
-  "name": "rlab-ws",
+  "name": "rlab-ws-gamma",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Toomas Tahves",
+  "license": "GPLV3",
   "dependencies": {
     "serialport": "^9.0.2",
     "ws": "^7.4.0"
