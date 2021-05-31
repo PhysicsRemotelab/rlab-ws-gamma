@@ -10,6 +10,6 @@
   "license": "GPLV3",
   "dependencies": {
     "serialport": "^9.0.2",
-    "ws": "^7.4.0"
+    "ws": "^7.4.6"
   }
 }
