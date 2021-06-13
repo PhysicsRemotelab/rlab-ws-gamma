@@ -2,32 +2,41 @@ const http = require('http');
 const ws = require('ws');
 const Sensor = require("./Sensor.js");
 
-let counter = 0;
-let counts = Array(4095).fill(0);
+const httpPort = process.env.npm_config_http_port;
+const serialport = process.env.npm_config_serial_port;
+
+if (!httpPort || !serialport) {
+    console.log('Missing required parameters');
+    return;
+}
 
 let server = http.createServer((req, res) => {
     res.writeHead(200);
 });
-server.listen(5002, () => console.log('Http running.'));
+server.listen(httpPort, () => console.log('Started server on', httpPort));
 const wss = new ws.Server({server, path: '/gamma'});
 wss.on('connection', handleConnection);
 let connections = new Array;
 
 let sensor = new Sensor();
-sensor.init('COM3');
+sensor.init(serialport);
 sensor.parser.on('data', handleData);
 sensor.port.pause();
 
+let counter = 0;
+let counts = Array(4095).fill(0);
+
 function handleData(buffer) {
-    console.log(buffer);
     let numbers = JSON.parse(JSON.stringify(buffer)).data;
     let result = getResult(numbers);
+
     if(result > 40 && result < 4096) {
         counts[result]++;
         counter++;
-        if(counter % 100 === 0) {
+
+        if(counter % 1000 === 0) {
             broadcast(JSON.stringify(counts));
-            console.log(JSON.stringify(counts));
+            console.log('Broadcased data');
         }
     }
 }
