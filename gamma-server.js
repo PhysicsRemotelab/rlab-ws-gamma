@@ -34,9 +34,11 @@ function handleData(buffer) {
         counts[result]++;
         counter++;
 
-        if(counter % 1000 === 0) {
+        // Collect 100 measurements, broadcast result and reset array
+        if(counter % 100 === 0) {
             broadcast(JSON.stringify(counts));
             console.log('Broadcased data');
+            counts = Array(4095).fill(0);
         }
     }
 }
