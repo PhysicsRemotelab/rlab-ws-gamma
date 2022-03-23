@@ -1,12 +1,13 @@
-const SerialPort = require('serialport');
+const { SerialPort } = require('serialport');
+const { ByteLengthParser } = require('@serialport/parser-byte-length');
 
 class Sensor {
     init(com) {
-        this.port = new SerialPort(com, {
+        this.port = new SerialPort({
+            path: com,
             baudRate: 115200
         });
-        const ByteLength = SerialPort.parsers.ByteLength;
-        this.parser = new ByteLength({ length: 5 });
+        this.parser = new ByteLengthParser({ length: 5 });
         this.port.pipe(this.parser);
         console.log('Initialized serial port', com);
     }
