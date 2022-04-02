@@ -1,6 +1,7 @@
 const http = require('http');
 const ws = require('ws');
 const Sensor = require("./Sensor.js");
+const fs = require('fs');
 
 const httpPort = process.env.npm_config_http_port ?? 5003;
 const serialport = process.env.npm_config_serial_port ?? 'COM3';
@@ -24,15 +25,16 @@ let counts = Array(4095).fill(0);
 function handleData(buffer) {
     let numbers = JSON.parse(JSON.stringify(buffer)).data;
     let result = getResult(numbers);
+    console.log(numbers);
+    fs.appendFileSync('measurement_020422.txt', result.toString() + '\n');
 
     if(result > 40 && result < 4096) {
         counts[result]++;
         counter++;
-
         // Collect 100 measurements, broadcast result and reset array
         if(counter % 100 === 0) {
             broadcast(JSON.stringify(counts));
-            console.log('Broadcased data');
+            console.log('Broadcasted data');
             counts = Array(4095).fill(0);
         }
     }

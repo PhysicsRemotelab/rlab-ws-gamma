@@ -1,6 +1,7 @@
 ## Commands
 List devices using command and find serial port of correct device
 ```
+npm install -g @serialport/list
 serialport-list
 ```
 
