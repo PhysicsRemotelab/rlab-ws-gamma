@@ -26,7 +26,7 @@ function handleData(buffer) {
     let numbers = JSON.parse(JSON.stringify(buffer)).data;
     let result = getResult(numbers);
     console.log(numbers);
-    fs.appendFileSync('measurement_020422.txt', result.toString() + '\n');
+    fs.appendFileSync('measurement_060422.txt', result.toString() + '\n');
 
     if(result > 40 && result < 4096) {
         counts[result]++;
