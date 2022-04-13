@@ -4,7 +4,7 @@ const Sensor = require("./Sensor.js");
 const fs = require('fs');
 
 const httpPort = process.env.npm_config_http_port ?? 5003;
-const serialport = process.env.npm_config_serial_port ?? 'COM3';
+const serialport = process.env.npm_config_serial_port ?? 'COM4';
 
 let server = http.createServer((req, res) => {
     res.writeHead(200);
@@ -26,7 +26,7 @@ function handleData(buffer) {
     let numbers = JSON.parse(JSON.stringify(buffer)).data;
     let result = getResult(numbers);
     console.log(numbers);
-    fs.appendFileSync('measurement_060422.txt', result.toString() + '\n');
+    fs.appendFileSync('measurement_070422_mo.txt', result.toString() + '\n');
 
     if(result > 40 && result < 4096) {
         counts[result]++;
