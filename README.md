@@ -7,5 +7,5 @@ serialport-list
 
 Start application by specifying correct serial port and http port, for example:
 ```
-npm start --serial-port=COM3 --http-port=5003
+npm start --serial-port=COM3
 ```
