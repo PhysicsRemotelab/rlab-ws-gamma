@@ -4,7 +4,7 @@ const Sensor = require("./Sensor.js");
 const fs = require('fs');
 
 const httpPort = process.env.npm_config_http_port ?? 5003;
-const serialport = process.env.npm_config_serial_port ?? 'COM3';
+const serialport = process.env.npm_config_serial_port ?? 'COM4';
 
 let server = http.createServer((req, res) => {
     res.writeHead(200);
@@ -23,7 +23,6 @@ let counter = 0;
 let measurement = Array(4095).fill(0);
 let startTime = getCurrentDate();
 
-
 function handleData(buffer) {
     let numbers = JSON.parse(JSON.stringify(buffer)).data;
     let result = getResult(numbers);
@@ -32,7 +31,7 @@ function handleData(buffer) {
         return;
     }
 
-    fs.appendFileSync('am241_17_04_22_mca2.txt', result.toString() + '\n');
+    fs.appendFileSync('new_ni_0805.txt', result.toString() + '\n');
 
     measurement[result]++;
     counter++;
