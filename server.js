@@ -31,7 +31,7 @@ function handleData(buffer) {
         return;
     }
 
-    fs.appendFileSync('background_1105.txt', result.toString() + '\n');
+    // fs.appendFileSync('background_1105.txt', result.toString() + '\n');
 
     measurement[result]++;
     counter++;
