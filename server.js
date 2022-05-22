@@ -1,10 +1,9 @@
 const http = require('http');
 const ws = require('ws');
 const Sensor = require("./Sensor.js");
-const fs = require('fs');
 
 const httpPort = process.env.npm_config_http_port ?? 5003;
-const serialport = process.env.npm_config_serial_port ?? 'COM4';
+const serialport = process.env.npm_config_serial_port ?? 'COM3';
 
 let server = http.createServer((req, res) => {
     res.writeHead(200);
@@ -25,21 +24,17 @@ let startTime = getCurrentDate();
 
 function handleData(buffer) {
     let numbers = JSON.parse(JSON.stringify(buffer)).data;
-    console.log(numbers);
     let result = getResult(numbers);
-    console.log(result);
     if (result === -1) {
         console.log('Bad input');
         return;
     }
 
-    // fs.appendFileSync('background_1105.txt', result.toString() + '\n');
-
     measurement[result]++;
     counter++;
 
     // Broadcast result every 100 counts
-    if(counter % 100 === 0) {
+    if(counter % 1000 === 0) {
         broadcast(JSON.stringify(measurement));
         console.log('Broadcasted data');
         console.log('Start time: ' + startTime);
@@ -90,6 +85,7 @@ function handleConnection(client) {
         connections.splice(position, 1);
         sensor.pause();
         measurement = Array(4095).fill(0);
+        counter = 0;
     });
 }
 
