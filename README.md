@@ -7,5 +7,10 @@ serialport-list
 
 Start application by specifying correct serial port and http port, for example:
 ```
-npm start --serial-port=COM3
+npm start --serial-port=/dev/ttyUSB4
+```
+
+Device ID:
+```
+usb-FTDI_FT232R_USB_UART_A63WQIYR-if00-port0	FTDI
 ```
