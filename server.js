@@ -74,7 +74,6 @@ function broadcast(data) {
 
 function handleConnection(client) {
     console.log('New connection');
-    sensor.resume();
     connections.push(client);
 
     client.on('error', error => {
@@ -94,10 +93,19 @@ function handleConnection(client) {
 
 async function handleCommand(message) {
     message = message.toString();
+
+    if (message === 'resume') {
+        console.log('Message ', message);
+        sensor.resume();
+    }
     if (message === 'reset') {
         console.log('Message ', message);
         measurement = Array(4095).fill(0);
         counter = 0;
+    }
+    if (message === 'pause') {
+        console.log('Message ', message);
+        sensor.pause();
     }
 }
 
