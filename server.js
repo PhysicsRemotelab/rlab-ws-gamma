@@ -96,7 +96,6 @@ async function handleCommand(message) {
     message = message.toString();
     if (message === 'reset') {
         console.log('Message ', message);
-        sensor.pause();
         measurement = Array(4095).fill(0);
         counter = 0;
     }
