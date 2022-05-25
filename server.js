@@ -81,14 +81,25 @@ function handleConnection(client) {
         console.log(error);
     });
 
+    client.on('message', (message) => {
+        handleCommand(message);
+    });
+
     client.on('close', () => {
         console.log('Connection closed');
         let position = connections.indexOf(client);
         connections.splice(position, 1);
+    });
+}
+
+async function handleCommand(message) {
+    message = message.toString();
+    if (message === 'reset') {
+        console.log('Message ', message);
         sensor.pause();
         measurement = Array(4095).fill(0);
         counter = 0;
-    });
+    }
 }
 
 function getCurrentDate() {
