@@ -93,6 +93,7 @@ function handleConnection(client) {
 
 async function handleCommand(message) {
     message = message.toString();
+    message = message.replace(/['"]+/g, '');
 
     if (message === 'resume') {
         console.log('Message ', message);
